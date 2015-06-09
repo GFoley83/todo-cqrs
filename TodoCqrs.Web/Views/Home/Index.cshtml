@@ -1,0 +1,50 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default" ng-controller="TaskListController as taskListController">
+            <div class="panel-heading">
+                Tasks
+            </div>
+            <div class="panel-body">
+                <form class="form-inline" ng-submit="taskListController.add()" novalidate>
+                    <div class="form-group">
+                        <input class="form-control" type="text" value="" ng-model="taskListController.newTaskText" placeholder="Enter something to do" required />
+                    </div>
+                    <button type="submit" class="btn btn-default">Add</button>
+                </form>
+            </div>
+            <table class="table">
+                <tbody>
+                    <tr ng-repeat="task in taskListController.tasks | orderBy: '-id'" ng-form="taskForm">
+                        <td style="text-align: center">
+                            <button type="button" class="btn btn-sm btn-success" aria-label="Left Align" ng-click="taskListController.resolve(task)">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                        <td class="col-md-9" ng-class="{'has-error': taskForm.$invalid}">
+                            <input class="form-control" type="text" ng-model="task.text" required style="width: 100%" />
+                        </td>
+                        <td class="col-md-2">
+                            <button class="btn btn-sm" type="submit" ng-disabled="taskForm.$invalid">Update</button>
+                            <button class="btn btn-sm btn-danger" ng-click="taskListController.delete(task)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="panel panel-default" ng-controller="HistoryListController as historyListController">
+            <div class="panel-heading">
+                Task history
+            </div>
+            <table class="table">
+                <tbody>
+                    <tr ng-repeat="task in historyListController.resolvedTasks">
+                        <td class="col-md-9" ng-class="{'has-error': taskForm.$invalid}">
+                            {{ task.text }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
